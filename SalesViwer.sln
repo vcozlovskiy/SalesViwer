@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesViwer.Client", "SalesViwer\SalesViwer.Client.csproj", "{2B7C9A08-541E-4DF3-B50F-EFFF58E8F2EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesViwer.Client", "SalesViwer\SalesViwer.Client.csproj", "{2B7C9A08-541E-4DF3-B50F-EFFF58E8F2EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesViwer.DAL", "SalesViwer.Client\SalesViwer.DAL.csproj", "{97D0BFE3-E0C8-4095-BE95-14A32BFF124B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesViwer.DAL", "SalesViwer.Client\SalesViwer.DAL.csproj", "{97D0BFE3-E0C8-4095-BE95-14A32BFF124B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesViwer.BL", "SalesViwer.Bl\SalesViwer.BL.csproj", "{66C15C27-12ED-45ED-A31A-9A61310C00A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesViwer.BL", "SalesViwer.Bl\SalesViwer.BL.csproj", "{66C15C27-12ED-45ED-A31A-9A61310C00A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

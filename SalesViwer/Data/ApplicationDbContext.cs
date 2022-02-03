@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SalesViwer.Client.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SalesViwer.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
     }
 }
