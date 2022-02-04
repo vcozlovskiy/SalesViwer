@@ -11,7 +11,7 @@ using SalesViwer.BL.Models;
 
 namespace SalesViwer.Client.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    
     public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
@@ -22,9 +22,10 @@ namespace SalesViwer.Client.Controllers
             _userManager = userManager;
         }
         public IActionResult Index() => View(_roleManager.Roles.ToList());
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Create() => View();
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(string name)
         {
             if (!string.IsNullOrEmpty(name))
@@ -46,6 +47,7 @@ namespace SalesViwer.Client.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             IdentityRole role = await _roleManager.FindByIdAsync(id);
@@ -57,7 +59,7 @@ namespace SalesViwer.Client.Controllers
         }
 
         public IActionResult UserList() => View(_userManager.Users.ToList());
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string userId)
         {
             // получаем пользователя
@@ -80,6 +82,7 @@ namespace SalesViwer.Client.Controllers
             return NotFound();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
 

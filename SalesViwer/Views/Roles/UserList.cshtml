@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SalesViwer.Client.Controllers.User>
+﻿@model IEnumerable<SalesViwer.BL.Models.User>
 
 <h2>User list</h2>
 <table class="table">
@@ -6,9 +6,12 @@
     {
         <tr>
             <td>@user.Email</td>
+            @if (User.IsInRole("Admin"))
+            {
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Access rights</a>
             </td>
+            }
         </tr>
     }
 </table>
