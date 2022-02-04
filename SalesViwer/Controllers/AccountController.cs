@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using SalesViwer.Client.ViewsModels;
+using SalesViwer.BL.Models;
 
 namespace SalesViwer.Client.Controllers
 {

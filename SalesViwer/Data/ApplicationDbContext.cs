@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SalesViwer.BL.Models;
 using SalesViwer.Client.Controllers;
 using System;
 using System.Collections.Generic;
