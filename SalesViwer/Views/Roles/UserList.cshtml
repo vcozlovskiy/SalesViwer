@@ -8,9 +8,9 @@
             <td>@user.Email</td>
             @if (User.IsInRole("Admin"))
             {
-            <td>
-                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Access rights</a>
-            </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Edit rights</a>
+                </td>
             }
         </tr>
     }

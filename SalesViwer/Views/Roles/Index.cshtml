@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<SalesViwer.BL.Models.User> UserManager
 
 <h2>Role list</h2>
 <table class="table">

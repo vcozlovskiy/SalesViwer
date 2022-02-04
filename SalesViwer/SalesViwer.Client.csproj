@@ -6,16 +6,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\jquery.validate.unobtrusive.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="jQuery" Version="3.6.0" />
+    <PackageReference Include="jQuery.UI.Combined" Version="1.13.0" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="4.0.40804" />
+    <PackageReference Include="Microsoft.AspNet.Web.Optimization" Version="1.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.13" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.40.0" />
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.0.0" />
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="3.2.12" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SalesViwer.Bl\SalesViwer.BL.csproj" />
+    <ProjectReference Include="..\SalesViwer.Client\SalesViwer.DAL.csproj" />
   </ItemGroup>
 
 </Project>

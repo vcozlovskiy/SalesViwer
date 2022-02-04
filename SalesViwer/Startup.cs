@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SalesViwer.BL.Models;
-using SalesViwer.Client.Controllers;
 using SalesViwer.Data;
 using System;
 using System.Collections.Generic;
@@ -42,9 +41,11 @@ namespace SalesViwer
             app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseAuthentication();    // подключение аутентификации
             app.UseAuthorization();

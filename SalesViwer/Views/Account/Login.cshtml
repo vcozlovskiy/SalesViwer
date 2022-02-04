@@ -1,6 +1,7 @@
 ﻿@model SalesViwer.Client.ViewsModels.LoginViewModel
-
-<h2>Login</h2>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<SalesViwer.BL.Models.User> UserManager
+<h2 class="display-3">Login</h2>
 <form method="post" asp-controller="Account" asp-action="Login"
       asp-route-returnUrl="@Model.ReturnUrl">
     <div asp-validation-summary="ModelOnly"></div>

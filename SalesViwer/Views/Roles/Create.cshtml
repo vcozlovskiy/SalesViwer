@@ -1,4 +1,6 @@
 ﻿@model string
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<SalesViwer.BL.Models.User> UserManager
 
 <div asp-validation-summary="All" class="text-danger"></div>
 

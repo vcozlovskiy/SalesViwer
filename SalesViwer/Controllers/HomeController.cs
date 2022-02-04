@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SalesViwer.DAL.UoWs;
 using SalesViwer.Models;
 using System;
 using System.Collections.Generic;

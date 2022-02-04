@@ -1,4 +1,7 @@
 ﻿@model SalesViwer.Client.ViewsModels.RegisterViewModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<SalesViwer.BL.Models.User> UserManager
+
 <h2>New User Registration</h2>
 <form method="post" asp-controller="Account" asp-action="Register">
     <div asp-validation-summary="ModelOnly"></div>

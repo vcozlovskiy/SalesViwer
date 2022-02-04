@@ -1,4 +1,14 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function getInfo(id) {
 
-// Write your JavaScript code.
+    $.ajax("/Tables/GetInfo")
+        .done(function (data) {
+
+            var count = data.length;
+            console.log(count);
+
+            for (var i = 0; i < count; i++) {
+                var element = $("<tr><td>" + data[i]['id'] + "</td><td>" + data[i]['fullName'] + "</td><td>" + data[i]['orders'] + "</td></tr>");
+                $("#tab").append(element);
+            }
+        });
+}

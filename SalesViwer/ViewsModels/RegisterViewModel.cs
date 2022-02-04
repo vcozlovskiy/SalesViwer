@@ -7,6 +7,7 @@ namespace SalesViwer.Client.ViewsModels
     {
         [Required]
         [Display(Name = "Email")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Incorrect address")]
         public string Email { get; set; }
 
         [Required]
@@ -20,6 +21,5 @@ namespace SalesViwer.Client.ViewsModels
         [Display(Name = "Confirm password")]
         public string PasswordConfirm { get; set; }
 
-        protected IdentityRole Role = new IdentityRole("User");
     }
 }
