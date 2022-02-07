@@ -1,24 +1,35 @@
 ﻿@using SalesViwer.Client.ViewsModels
 @model SalesViwer.Client.ViewsModels.AddOrderViewModel
 
-<div asp-validation-summary="All" class="text-danger"></div>
-
-@using (Html.BeginForm())
-{
+<form method="post" asp-controller="Order" asp-action="Save"
+      asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
     <div hidden="true">
-        @Html.EditorFor(m => m.ClientId)
+        <label asp-for="ClientId"></label><br />
+        <input asp-for="ClientId" />
+        <span asp-validation-for="ClientId"></span>
     </div>
     <div>
-        @Html.LabelFor(m => m.ItemName)
-        @Html.EditorFor(m => m.ItemName)
+        <label asp-for="ManagerFullName"></label><br />
+        <input asp-for="ManagerFullName" />
+        <span asp-validation-for="ManagerFullName"></span>
     </div>
     <div>
-        @Html.LabelFor(m => m.Price)
-        @Html.EditorFor(m => m.Price)
+        <label asp-for="ItemName"></label><br />
+        <input asp-for="ItemName" />
+        <span asp-validation-for="ItemName"></span>
     </div>
     <div>
-        @Html.LabelFor(m => m.dateTimeOrder)
-        @Html.EditorFor(m => m.dateTimeOrder)
+        <label asp-for="Price"></label><br />
+        <input asp-for="Price" min="0" />
+        <span asp-validation-for="Price"></span>
     </div>
-    <input asp-controller="Order" asp-action="Save" type="submit" value="Save" />
-}
+    <div>
+        <label asp-for="dateTimeOrder"></label><br />
+        <input asp-for="dateTimeOrder" />
+        <span asp-validation-for="dateTimeOrder"></span>
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+</form>

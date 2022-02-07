@@ -15,6 +15,7 @@ namespace SalesInfoManager.DAL.Abstractions
         void Add(T item);
         void AddRange(IEnumerable<T> items);
         void Attach(T item);
+        IEnumerable<T> Include(string path);
         void Remove(T item);
         void Remove(IEnumerable<T> items);
         void Detach(T item);

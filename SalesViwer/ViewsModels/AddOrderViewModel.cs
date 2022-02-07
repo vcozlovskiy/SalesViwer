@@ -11,10 +11,12 @@ namespace SalesViwer.Client.ViewsModels
         public string ItemName { get; set; }
         public DateTime dateTimeOrder { get; set; }
         public int Price { get; set; }
+        public string ManagerFullName { get; set; }
+        public string ReturnUrl { get; set; }
 
         public AddOrderViewModel()
         {
-            
+
         }
         public AddOrderViewModel(int id)
         {

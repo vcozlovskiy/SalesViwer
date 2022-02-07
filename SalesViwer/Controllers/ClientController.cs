@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace SalesViwer.Client.Controllers
 {
-    public class TablesController : Controller, IDisposable
+    public class ClientController : Controller, IDisposable
     {
-        protected ClientUoW clientUoW = new ClientUoW();
-        protected AddEntityUoW<SalesInfoManager.Persistence.Models.Client> addEntity =
-            new FactoryUoW<SalesInfoManager.Persistence.Models.Client>().CreateInstantsAdd();
-        public async Task<JsonResult> GetInfo()
+        protected BaseUoW<SalesInfoManager.Persistence.Models.Client> clientUoW = new FactoryUoW<SalesInfoManager.Persistence.Models.Client>()
+            .CreateInstant();
+
+        public async Task<JsonResult> ClientsJson()
         {
             return await Task.Run(() =>
             {
-                var clients = clientUoW.GetClientsInclude().ToList();
+                var clients = clientUoW.Repository.Include("Orders.Item").ToList();
 
                 return Json(clients);
             });
@@ -31,9 +31,9 @@ namespace SalesViwer.Client.Controllers
         }
         public IActionResult Edit(Int64 id)
         {
-            SalesInfoManager.Persistence.Models.Client client = clientUoW.GetEntityUoW.Repository.Get((int)id);
+            SalesInfoManager.Persistence.Models.Client client = clientUoW.Repository.Get((int)id);
 
-            var orderItem = clientUoW.GetEntityUoW.Repository.Context
+            var orderItem = clientUoW.Repository.Context
                 .Set<SalesInfoManager.Persistence.Models.Client>()
                 .Include("Orders.Item")
                 .ToList();
@@ -51,25 +51,22 @@ namespace SalesViwer.Client.Controllers
 
             return View(edit);
         }
-
         public IActionResult Create()
         {
             return View();
         }
-
         public IActionResult Save(SalesInfoManager.Persistence.Models.Client client)
         {
-            addEntity.AddEntity(client);
-            addEntity.SaveChanges();
+            clientUoW.Repository.Add(client);
+            clientUoW.SaveChanges();
             return View("Table");
         }
-
         public async Task<JsonResult> GetOrderInfo(Int64 id)
         {
             return await Task.Run(() =>
             {
                 int f = (int)id;
-                var orderItem = clientUoW.GetEntityUoW.Repository.Context
+                var orderItem = clientUoW.Repository.Context
                    .Set<SalesInfoManager.Persistence.Models.Client>()
                    .Include("Orders.Item")
                    .ToList();
@@ -94,8 +91,7 @@ namespace SalesViwer.Client.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            clientUoW.GetEntityUoW.Dispose();
-            addEntity.Dispose();
+            clientUoW.Dispose();
             base.Dispose(disposing);
         }
     }

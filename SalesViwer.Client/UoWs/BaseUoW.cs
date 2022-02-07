@@ -20,6 +20,11 @@ namespace SalesInfoManager.DAL.UoWs
             Repository = repository;
         }
 
+        public void SaveChanges()
+        {
+            Repository.Context.SaveChanges();
+        }
+
         protected virtual void Dispose(bool isDisposing)
         {
             if (isDisposed) return;

@@ -66,6 +66,11 @@ namespace SalesInfoManager.DAL.Repositories
             GC.SuppressFinalize(this);
         }
 
+        public virtual IEnumerable<T> Include(string path)
+        {
+            return Context.Set<T>().Include(path);
+        }
+
         public virtual T First(Expression<Func<T, bool>> filter)
         {
             return filter != null ? Context.Set<T>().FirstOrDefault(filter) : Context.Set<T>().FirstOrDefault();
