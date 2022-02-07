@@ -11,7 +11,7 @@ using SalesViwer.BL.Models;
 
 namespace SalesViwer.Client.Controllers
 {
-    
+
     public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
@@ -62,11 +62,9 @@ namespace SalesViwer.Client.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string userId)
         {
-            // получаем пользователя
             User user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var allRoles = _roleManager.Roles.ToList();
                 ChangeRoleViewModel model = new ChangeRoleViewModel
@@ -85,7 +83,6 @@ namespace SalesViwer.Client.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
-
             User user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {

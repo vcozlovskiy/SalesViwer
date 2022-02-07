@@ -20,6 +20,11 @@ namespace SalesInfoManager.DAL.UoWs
 
         public AddEntityUoW(IGenericRepository<Entity> repo) : base(repo)
         {
+
+        }
+        public void SaveChanges()
+        {
+            Repository.Context.SaveChanges();
         }
     }
 }

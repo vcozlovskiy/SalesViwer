@@ -1,0 +1,27 @@
+﻿@using SalesViwer.Client.ViewsModels
+@using SalesInfoManager.Persistence.Models;
+@using Microsoft.AspNetCore.Mvc;
+@model EditClientViewModel
+
+<h2>Changing client orders @Model.ClientName</h2>
+<h2 id="empty"></h2>
+<table id="tab">
+    <colgroup>
+        <col span="2" style="background:Khaki">
+        <col style="background-color:LightCyan">
+    </colgroup>
+    <tr>
+        <td>Item Id</td>
+        <td>Item name</td>
+        <td>Price</td>
+        <td>Date</td>
+    </tr>
+</table>
+<div>
+    <div class="btn-group" style="display: block;
+                margin: 0 auto;
+                width: 1000px;">
+        <input type="submit" onclick="ShowOrderTable(@Model.Id)" value="Show table" />
+        <input onclick="AddOrder(@Model.Id)" type="submit" value="Add order" />
+    </div>
+</div>

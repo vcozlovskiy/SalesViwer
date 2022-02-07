@@ -1,0 +1,31 @@
+﻿<div class="text-center">
+    <div class='dcell'></div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="btn-group" style="display: block;
+                margin: 0 auto;
+                width: 1000px;">
+            <button class="btn btn-info btn-sm" onclick="getInfoAdmin();">Users request</button>
+            <button class="btn btn-info btn-sm" onclick="Create();">Add user</button>
+        </div>
+    }
+    else
+    {
+        <div class="btn-group" style="display: block;
+                margin: 0 auto;
+                width: 1000px;">
+            <button class="btn btn-info btn-sm" onclick="getInfoUser();">Users request</button>
+        </div>
+    }
+</div>
+<table id="tab">
+    <colgroup>
+        <col span="2" style="background:Khaki">
+        <col style="background-color:LightCyan">
+    </colgroup>
+    <tr>
+        <td>Id</td>
+        <td>Client name</td>
+        <td>Order</td>
+    </tr>
+</table>

@@ -23,5 +23,23 @@ namespace SalesViwer.DAL.UoWs
 
             GetEntityUoW = new GetEntityUoW<Client>(clientRepository);
         }
+
+        public IEnumerable<Object> GetClientsInclude()
+        {
+            var clientsAndItems =  GetEntityUoW.Repository.Context.Set<Client>().Select(c => new
+            {
+                Id = c.Id,
+                FullName = c.FullName,
+                Items = c.Orders.Select(o => o.Item.Name)
+            }
+            ).OrderBy(c => c.FullName);
+
+            return clientsAndItems.ToList();
+        }
+
+        public void SaveChanges()
+        {
+            GetEntityUoW.Repository.Context.SaveChanges();
+        }
     }
 }

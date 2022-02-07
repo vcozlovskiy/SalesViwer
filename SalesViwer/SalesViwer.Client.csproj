@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Home\NewFolder\**" />
+    <Content Remove="Views\Home\NewFolder\**" />
+    <EmbeddedResource Remove="Views\Home\NewFolder\**" />
+    <None Remove="Views\Home\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\js\jquery.validate.unobtrusive.min.js" />
   </ItemGroup>
 

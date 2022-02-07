@@ -1,0 +1,12 @@
+﻿@using SalesInfoManager.Persistence.Models;
+@model Client
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.LabelFor(m => m.FullName)
+        @Html.EditorFor(m => m.FullName)
+    </div>
+    <div>
+        <input asp-controller="Tables" asp-action="Save" type="submit" value="Save" />
+    </div>
+}
