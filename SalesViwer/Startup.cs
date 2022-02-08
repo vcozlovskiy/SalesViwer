@@ -6,13 +6,9 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using SalesViwer.BL.Models;
+using SalesViwer.Client.Configuration;
 using SalesViwer.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SalesViwer
 {
@@ -27,11 +23,14 @@ namespace SalesViwer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();
+
+            services.Configure<DbConfiguration>(Configuration.GetSection("DbConfiguration"));
 
             services.AddControllersWithViews();
         }

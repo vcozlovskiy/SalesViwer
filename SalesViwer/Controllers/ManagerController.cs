@@ -6,12 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using SalesViwer.Client.Configuration;
 
 namespace SalesViwer.Client.Controllers
 {
     public class ManagerController : Controller
     {
-        protected BaseUoW<Manager> managerUoW = new FactoryUoW<Manager>().CreateInstant();
+        protected BaseUoW<Manager> managerUoW;
+        private readonly IOptions<DbConfiguration> config;
+
+        public ManagerController(IOptions<DbConfiguration> config)
+        {
+            this.config = config;
+            managerUoW = new FactoryUoW<Manager>().CreateInstant(config.Value.ConnectionString);
+        }
+
         public async Task<JsonResult> JsonManagers()
         {
             return await Task.Run(() =>

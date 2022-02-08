@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using SalesInfoManager.DAL.UoWs;
 using SalesInfoManager.Persistence.Models;
+using SalesViwer.Client.Configuration;
 using SalesViwer.Client.ViewsModels;
 using SalesViwer.DAL.UoWs;
 using System;
@@ -13,8 +16,15 @@ namespace SalesViwer.Client.Controllers
 {
     public class ClientController : Controller, IDisposable
     {
-        protected BaseUoW<SalesInfoManager.Persistence.Models.Client> clientUoW = new FactoryUoW<SalesInfoManager.Persistence.Models.Client>()
-            .CreateInstant();
+        private readonly IOptions<DbConfiguration> config;
+        protected BaseUoW<SalesInfoManager.Persistence.Models.Client> clientUoW;
+
+        public ClientController(IOptions<DbConfiguration> config)
+        {
+            this.config = config;
+            clientUoW = new FactoryUoW<SalesInfoManager.Persistence.Models.Client>()
+            .CreateInstant(config.Value.ConnectionString);
+        }
 
         public async Task<JsonResult> ClientsJson()
         {
@@ -25,10 +35,25 @@ namespace SalesViwer.Client.Controllers
                 return Json(clients);
             });
         }
+
+        public async Task<JsonResult> ClientSortedJson()
+        {
+            return await Task.Run(() =>
+            {
+                var clients = clientUoW.Repository.Include("Orders.Item")
+                .ToList()
+                .OrderBy(c => c.FullName);
+
+                return Json(clients);
+            });
+        }
+
         public async Task<IActionResult> Table()
         {
             return await Task.Run(() => View());
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Int64 id)
         {
             SalesInfoManager.Persistence.Models.Client client = clientUoW.Repository.Get((int)id);
@@ -51,10 +76,14 @@ namespace SalesViwer.Client.Controllers
 
             return View(edit);
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Save(SalesInfoManager.Persistence.Models.Client client)
         {
             clientUoW.Repository.Add(client);

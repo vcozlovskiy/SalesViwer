@@ -1,42 +1,9 @@
-﻿function ShowClientsTable() {
+﻿const { data } = require("jquery");
+
+function ShowClientsTable() {
 
     $.post("/Client/ClientsJson")
-        .done(function (data) {
-
-            var count = data.length;
-            console.log(count);
-            $('table').remove();
-
-            var table = $(
-                "<table id='table'>" +
-                "<colgroup>" +
-                "<col span = '2' style = 'background:Khaki'>" +
-                "<col style='background - color: LightCyan'>" +
-                "</colgroup>" +
-                "<tr>" +
-                "<td> Id</td>" +
-                "<td> Client name</td>" +
-                "<td>Order</td>" +
-                "</tr>" +
-                "<table>");
-            $("main").append(table);
-
-            for (var i = 0; i < count; i++) {
-                var ordesName = "";
-                for (var j = 0; j < data[i]['orders'].length; j++)
-                {
-                    ordesName += data[i]['orders'][j]['item']['name'] + ',';
-                }
-                var tablePart = $("<tr id=" + data[i]['id'] + "><td>" + data[i]['id'] +
-                    "</td><td>" + data[i]['fullName'] +
-                    "</td><td>" + ordesName +
-                    '<td><button class="btn btn-info btn-sm" onclick="Edit(' + data[i]['id'] + ');">Edit</button></td>' +
-                    "</td></tr>");
-                $("#table").append(tablePart);
-            }
-
-            $("main").append(sortParametrs);
-        });
+        .done(function (data) { TableClient(data); });
 }
 
 function getInfoUser() {
@@ -45,7 +12,7 @@ function getInfoUser() {
 
             var count = data.length;
             console.log(count);
-            $('table').remove();
+            ClearPage();
 
             var table = $(
                 "<table id='table'>" +
@@ -76,19 +43,20 @@ function getInfoUser() {
 }
 
 function Edit(id) {
-    var url = "/Tables/Edit/" + id;
+    var url = "/Client/Edit/" + id;
     $(location).attr('href', url);
 }
 
-function CreateNewUser() {
-    var url = "/Tables/Create";
+function CreateNewClient() {
+    var url = "/Client/Create";
     $(location).attr('href', url);
 }
 
 function ShowOrderTable(id) {
-    $.post("/Tables/GetOrderInfo", { id: id }).done(
+    $.post("/Client/GetOrderInfo", { id: id }).done(
         function (orders) {
             var count = orders.length;
+            ClearPage();
 
             if (count != 0) {
                 for (var i = 0; i < count; i++) {
@@ -124,7 +92,7 @@ function ShowAllOrders() {
     $.post("/Order/JsonOrders").done(
         function (orders) {
             var count = orders.length;
-            $('table').remove();
+            ClearPage();
 
             var table = $(
                 "<table id='table'>" +
@@ -164,7 +132,7 @@ function ShowManagetTable() {
     $.post("/Manager/JsonManagers").done(
         function (managerJson) {
             var count = managerJson.length;
-            $('table').remove();
+            ClearPage();
 
             var table = $(
                 "<table id='table'>" +
@@ -193,15 +161,55 @@ function ShowManagetTable() {
     )
 }
 
-var sortParametrs = $("<form action='a()'>" +
-    "<label for='parametre'>Full name</label>" + 
-      "<select name='parametre' id='lang'>" +
-        "<option value='Ascending'>Ascending</option>" +
-        "<option value='Descending'>Descending</option>" +
-      "</select>" +
-      "<input type='submit' value='Submit' />" + 
-    "</form >")
+function SortByAlphabet() {
+    $.post("/Client/ClientSortedJson")
+        .done(function (data) { TableClient(data); })
+}
 
-function a(param) {
-    console.log("Work" + param)
+function ReverseAlphabetical() {
+    $.post("/Client/ClientSortedJson")
+        .done(function (data) { TableClient(data.reverse()); })
+}
+
+function TableClient(data) {
+
+    var count = data.length;
+    ClearPage();
+
+    var table = $(
+        "<table id='table'>" +
+        "<colgroup>" +
+        "<col span = '2' style = 'background:Khaki'>" +
+        "<col style='background - color: LightCyan'>" +
+        "</colgroup>" +
+        "<tr>" +
+        "<td> Id</td>" +
+        "<td> Client name</td>" +
+        "<td>Order</td>" +
+        "</tr>" +
+        "<table>");
+    $("main").append(table);
+
+
+    for (var i = 0; i < count; i++) {
+        var ordesName = "";
+        for (var j = 0; j < data[i]['orders'].length; j++) {
+            ordesName += data[i]['orders'][j]['item']['name'] + ',';
+        }
+        var tablePart = $("<tr id=" + data[i]['id'] + "><td>" + data[i]['id'] +
+            "</td><td>" + data[i]['fullName'] +
+            "</td><td>" + ordesName +
+            '<td><button class="btn btn-info btn-sm" onclick="Edit(' + data[i]['id'] + ');">Edit</button></td>' +
+            "</td></tr>");
+        $("#table").append(tablePart);
+    }
+    var sortByAlphabet = $("<button id='sort' class='btn btn-info btn-sm' onclick='SortByAlphabet()'>Sort by alphabet</button>" +
+                            "<button id='sort' class='btn btn-info btn-sm' onclick='ReverseAlphabetical()'>Sort by alphabet reverse</button>")
+
+    $("main").append(sortByAlphabet);
+}
+
+function ClearPage()
+{
+    $('#sort, #table').remove();
 }

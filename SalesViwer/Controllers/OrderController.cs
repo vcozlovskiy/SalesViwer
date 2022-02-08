@@ -1,28 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SalesInfoManager.DAL.UoWs;
 using SalesInfoManager.Persistence.Models;
 using SalesViwer.Client.ViewsModels;
 using SalesViwer.DAL.UoWs;
-using SalesViwer.Models;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using SalesViwer.Client.Configuration;
 
 namespace SalesViwer.Client.Controllers
 {
     public class OrderController : Controller, IDisposable
     {
-        protected BaseUoW<SalesInfoManager.Persistence.Models.Client> clientUoW = new FactoryUoW<SalesInfoManager.Persistence.Models.Client>().CreateInstant();
-        protected BaseUoW<Item> itemUow = new FactoryUoW<Item>().CreateInstant();
-        protected BaseUoW<Order> orderUoW = new FactoryUoW<Order>().CreateInstant();
-        protected BaseUoW<Manager> managerUoW = new FactoryUoW<Manager>().CreateInstant();
-        protected int ClientId;
+        private readonly IOptions<DbConfiguration> config;
+        protected BaseUoW<SalesInfoManager.Persistence.Models.Client> clientUoW;
+        protected BaseUoW<Item> itemUow;
+        protected BaseUoW<Order> orderUoW;
+        protected BaseUoW<Manager> managerUoW;
         private bool isDisposed = false;
 
+        public OrderController(IOptions<DbConfiguration> config)
+        {
+            this.config = config;
+            clientUoW = new FactoryUoW<SalesInfoManager.Persistence.Models
+                .Client>().CreateInstant(config.Value.ConnectionString);
+
+            itemUow = new FactoryUoW<Item>().CreateInstant(config.Value.ConnectionString);
+            orderUoW = new FactoryUoW<Order>().CreateInstant(config.Value.ConnectionString);
+            managerUoW = new FactoryUoW<Manager>().CreateInstant(config.Value.ConnectionString);
+        }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(Int64 id)
         {
             int clientIn = (int)id;
@@ -32,10 +46,13 @@ namespace SalesViwer.Client.Controllers
                 dateTimeOrder = DateTime.Now,
             }));
         }
+
+        [Authorize(Roles = "Admin")]
         public Task<IActionResult> Edit()
         {
             return null;
         }
+
         public async Task<JsonResult> JsonOrders()
         {
             return await Task.Run(() =>
@@ -45,6 +62,8 @@ namespace SalesViwer.Client.Controllers
                 return Json(ordes);
             });
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Save(AddOrderViewModel newOrderModel)
         {
             return await Task.Run(() =>
