@@ -26,9 +26,31 @@ namespace SalesViwer.Client.Controllers
         {
             return await Task.Run(() =>
             {
-                var ordes = managerUoW.Repository.Include("Orders").ToList();
+                var managers = managerUoW.Repository.Include("Orders").ToList();
 
-                return Json(ordes);
+                return Json(managers);
+            });
+        }
+
+        public async Task<JsonResult> JsonManagersSortByName()
+        {
+            return await Task.Run(() =>
+            {
+                var managers = managerUoW.Repository.Include("Orders").OrderBy(o => o.FullName).ToList();
+
+                return Json(managers);
+            });
+        }
+
+        public async Task<JsonResult> JsonManagersSortByCountOrders()
+        {
+            return await Task.Run(() =>
+            {
+                var sortedOrders = managerUoW.Repository
+                .Include("Orders")
+                .OrderBy(o => o.Orders.Count()).ToList();
+
+                return Json(sortedOrders);
             });
         }
     }

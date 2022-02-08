@@ -63,6 +63,30 @@ namespace SalesViwer.Client.Controllers
             });
         }
 
+        public async Task<JsonResult> JsonOrdersSortByTime()
+        {
+            return await Task.Run(() =>
+            {
+                var sortedOrders = orderUoW.Repository
+                .Include("Item")
+                .OrderBy(o => o.dateTimeOrder).ToList();
+
+                return Json(sortedOrders);
+            });
+        }
+
+        public async Task<JsonResult> JsonOrdersSortByPrice()
+        {
+            return await Task.Run(() =>
+            {
+                var sortedOrders = orderUoW.Repository
+                .Include("Item")
+                .OrderBy(o => o.Price).ToList();
+
+                return Json(sortedOrders);
+            });
+        }
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Save(AddOrderViewModel newOrderModel)
         {
